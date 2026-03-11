@@ -49,13 +49,13 @@ type DashboardUserData struct {
 }
 
 type Asset struct {
-	Brand      string    `db:"brand" json:"brand"`
-	Model      string    `db:"model" json:"model"`
-	SerialNo   string    `db:"serial_no" json:"serialNo"`
-	Type       string    `db:"type" json:"type"`
-	Status     string    `db:"status" json:"status"`
-	Owner      string    `db:"owner" json:"owner"`
-	AssignedOn time.Time `db:"created_at" json:"createdAt"`
+	Brand     string    `db:"brand" json:"brand"`
+	Model     string    `db:"model" json:"model"`
+	SerialNo  string    `db:"serial_no" json:"serialNo"`
+	Type      string    `db:"type" json:"type"`
+	Status    string    `db:"status" json:"status"`
+	Owner     string    `db:"owner" json:"owner"`
+	CreatedAt time.Time `db:"created_at" json:"createdAt"`
 }
 type SentServiceRequest struct {
 	StartDate string `json:"start_date" db:"service_start" validate:"required"`

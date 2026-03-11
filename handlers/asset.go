@@ -74,7 +74,7 @@ func CreateAsset(w http.ResponseWriter, r *http.Request) {
 			return dbhelpers.InsertKeyboard(tx, assetID, body.Keyboard)
 		case "mobile":
 			if body.Mobile == nil {
-				return fmt.Errorf("monitor details required")
+				return fmt.Errorf("mobile details required")
 			}
 			return dbhelpers.InsertMobile(tx, assetID, body.Mobile)
 

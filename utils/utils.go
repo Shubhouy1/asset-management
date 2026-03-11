@@ -52,6 +52,7 @@ func HashPassword(password string) (string, error) {
 	return string(bytes), nil
 
 }
+
 func GenerateJWT(userID, sessionID, userRole string) (string, error) {
 	claims := jwt.MapClaims{
 		"user_id":    userID,

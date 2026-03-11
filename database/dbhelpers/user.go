@@ -346,7 +346,7 @@ func GetUserInfo(name, role, userType, assetStatus string) ([]models.UserInfoReq
 			return users, err
 		}
 
-		if assetStatus != "available" && len(assetDetails) == 0 {
+		if assetStatus != "" && len(assetDetails) == 0 {
 			continue
 		}
 

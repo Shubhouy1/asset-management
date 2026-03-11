@@ -8,13 +8,13 @@ type UserExist struct {
 	Role         string `db:"role"`
 }
 type UserRequest struct {
-	Name        string `db:"name" json:"name" valid:"required"`
-	Email       string `db:"email" json:"email" valid:"email,required"`
-	Role        string `db:"role" json:"role" valid:"required"`
-	Type        string `db:"type" json:"type" valid:"required"`
-	PhoneNumber string `db:"phone_no" json:"phone_no" valid:"required ,min =10"`
-	Password    string `db:"password_hash" json:"password" valid:"required,min =6"`
-	JoiningDate string `db:"joining_date" json:"joining_date" valid:"required"`
+	Name        string `db:"name" json:"name" validate:"required"`
+	Email       string `db:"email" json:"email" validate:"email,required"`
+	Role        string `db:"role" json:"role" validate:"required"`
+	Type        string `db:"type" json:"type" validate:"required"`
+	PhoneNumber string `db:"phone_no" json:"phone_no" validate:"required ,min=10"`
+	Password    string `db:"password_hash" json:"password" validate:"required,min=6"`
+	JoiningDate string `db:"joining_date" json:"joining_date" validate:"required"`
 }
 type LoginRequest struct {
 	Email    string `json:"email" validate:"required,email"`

@@ -184,7 +184,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if txErr != nil {
-		utils.RespondError(w, http.StatusBadRequest, "failed to delete user", txErr)
+		utils.RespondError(w, http.StatusInternalServerError, "failed to delete user", txErr)
 		return
 	}
 

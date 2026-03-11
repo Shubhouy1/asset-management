@@ -3,7 +3,6 @@ package database
 import (
 	"errors"
 	"fmt"
-	"log"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -58,42 +57,25 @@ func migrateUp(db *sqlx.DB) error {
 	}
 	return nil
 }
-func Tx(fn func(tx *sqlx.Tx) error) error {
+func Tx(fn func(tx *sqlx.Tx) error) (err error) {
 	tx, err := Asset.Beginx()
 	if err != nil {
-		return fmt.Errorf("failed to begin tx: %v", err)
+		return fmt.Errorf("failed to begin tx: %w", err)
 	}
 	defer func() {
-		if err != nil {
-			if rollBackErr := tx.Rollback(); rollBackErr != nil {
-				log.Printf("failed to rollback tx: %v", rollBackErr)
-			}
-			return
+		if p := recover(); p != nil {
+			_ = tx.Rollback()
+			panic(p)
 		}
-		if err := tx.Commit(); err != nil {
-			log.Printf("failed to commit tx: %v", err)
-		}
-	}()
-	err = fn(tx)
-	return err
-}
-func TX(fn func(tx *sqlx.Tx) error) error {
-	tx, err := Asset.Beginx()
-	if err != nil {
-		return fmt.Errorf("failed to begin tx: %v", err)
-	}
-	defer func() {
-		if err != nil {
-			if rollBackErr := tx.Rollback(); rollBackErr != nil {
-				log.Printf("failed to rollback tx: %v", rollBackErr)
-			}
-			return
-		}
-		if err := tx.Commit(); err != nil {
-			log.Printf("failed to commit tx: %v", err)
-		}
-	}()
 
+		if err != nil {
+			_ = tx.Rollback()
+			return
+		}
+		if commitErr := tx.Commit(); commitErr != nil {
+			err = fmt.Errorf("failed to commit tx: %w", commitErr)
+		}
+	}()
 	err = fn(tx)
-	return err
+	return
 }
